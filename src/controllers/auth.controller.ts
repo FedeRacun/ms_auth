@@ -104,13 +104,13 @@ export const resetPasswordHandler = async (
 	req: Request<Record<string, unknown>, object, ResetPasswordBody>,
 	res: Response,
 ): Promise<void> => {
-	const { password, accessToken } = req.body;
+	const { newPassword, accessToken } = req.body;
 
-	try {
-		const result = await authService.resetPassword(password, accessToken);
-		resSuccess(res, result);
-	} catch (err) {
-		const error = err as Error;
-		resError(res, error.message, 400);
-	}
+  try {
+    const result = await authService.resetPassword(accessToken, newPassword);
+    resSuccess(res, result);
+  } catch (err) {
+    const error = err as Error;
+    resError(res, error.message, 400);
+  }
 };

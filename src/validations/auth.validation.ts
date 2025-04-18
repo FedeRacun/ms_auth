@@ -37,7 +37,7 @@ export const confirmEmailSchema = z
 
 export const resetPasswordSchema = z
 	.object({
-		password: z
+		newPassword: z
 			.string()
 			.min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
 		accessToken: z.string().min(1, { message: "Token inválido" }),

@@ -24,14 +24,17 @@ import { Router } from "express";
 const router = Router();
 
 router.post("/register", validate(registerSchema), registerHandler);
+router.post("/login", validate(loginSchema), loginHandler);
+router.post("/logout", logoutHandler);
+
+router.post("/refresh", validate(refreshSessionSchema), refreshTokenHandler);
+
 router.post(
 	"/confirm-email",
 	validate(confirmEmailSchema),
 	confirmEmailHandler,
 );
-router.post("/login", validate(loginSchema), loginHandler);
-router.post("/refresh", validate(refreshSessionSchema), refreshTokenHandler);
-router.post("/logout", logoutHandler);
+
 router.post(
 	"/forgot-password",
 	validate(forgotPasswordSchema),

@@ -85,15 +85,25 @@ export class AuthService {
 		}
 	}
 
-	// TODO: Implement reset password
-	// This function is not implemented in Supabase yet
-	async resetPassword(password: string, accessToken: string) {
-		const { error } = await supabase.auth.updateUser({
-			password,
+	async resetPassword(accessToken: string, newPassword: string) {
+		const { error: setSessionError } = await supabase.auth.setSession({
+			access_token: accessToken,
+			refresh_token: '',
 		});
-
-		if (error) {
-			throw new Error(error.message);
+	
+		if (setSessionError) {
+			throw new Error(setSessionError.message);
 		}
+	
+		const { error: updateError } = await supabase.auth.updateUser({
+			password: newPassword,
+		});
+	
+		if (updateError) {
+			throw new Error(updateError.message);
+		}
+	
+		return { message: "Password updated successfully" };
 	}
+	
 }
