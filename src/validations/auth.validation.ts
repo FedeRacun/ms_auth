@@ -16,6 +16,13 @@ export const loginSchema = z
 	})
 	.strict();
 
+export const refreshSessionSchema = z
+	.object({
+		refreshToken: z.string().min(1, { message: "Token inválido" }),
+	})
+	.strict();
+
 // Tipos inferidos automáticamente
 export type RegisterBody = z.infer<typeof registerSchema>;
 export type LoginBody = z.infer<typeof loginSchema>;
+export type RefreshSessionBody = z.infer<typeof refreshSessionSchema>;
