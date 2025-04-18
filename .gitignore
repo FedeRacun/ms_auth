@@ -1,2 +1,16 @@
 # ignore node_modules
 node_modules
+
+# ignore build
+build
+
+# ignore coverage
+coverage
+
+# ignore logs
+logs
+
+# ignore env files
+.env
+.env.local
+.env.development
