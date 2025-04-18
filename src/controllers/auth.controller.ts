@@ -1,9 +1,12 @@
 import { AuthService } from "@services/auth.service";
 import { resError, resSuccess } from "@utils/responseHelper";
 import type {
+	ConfirmEmailBody,
+	ForgotPasswordBody,
 	LoginBody,
 	RefreshSessionBody,
 	RegisterBody,
+	ResetPasswordBody,
 } from "@validations/auth.validation";
 import type { Request, Response } from "express";
 
@@ -51,5 +54,63 @@ export const refreshTokenHandler = async (
 	} catch (err) {
 		const error = err as Error;
 		resError(res, error.message, 401);
+	}
+};
+
+export const logoutHandler = async (
+	_: Request,
+	res: Response,
+): Promise<void> => {
+	try {
+		await authService.logout();
+		resSuccess(res, { message: "Logout successful" });
+	} catch (err) {
+		const error = err as Error;
+		resError(res, error.message, 401);
+	}
+};
+
+export const forgotPasswordHandler = async (
+	req: Request<Record<string, unknown>, object, ForgotPasswordBody>,
+	res: Response,
+): Promise<void> => {
+	const { email } = req.body;
+
+	try {
+		const result = await authService.forgotPassword(email);
+		resSuccess(res, result);
+	} catch (err) {
+		const error = err as Error;
+		resError(res, error.message, 400);
+	}
+};
+
+export const confirmEmailHandler = async (
+	req: Request<Record<string, unknown>, object, ConfirmEmailBody>,
+	res: Response,
+): Promise<void> => {
+	const { email, accessToken } = req.body;
+
+	try {
+		const result = await authService.confirmEmail(email, accessToken);
+		resSuccess(res, result);
+	} catch (err) {
+		const error = err as Error;
+		resError(res, error.message, 400);
+	}
+};
+
+export const resetPasswordHandler = async (
+	req: Request<Record<string, unknown>, object, ResetPasswordBody>,
+	res: Response,
+): Promise<void> => {
+	const { password, accessToken } = req.body;
+
+	try {
+		const result = await authService.resetPassword(password, accessToken);
+		resSuccess(res, result);
+	} catch (err) {
+		const error = err as Error;
+		resError(res, error.message, 400);
 	}
 };
