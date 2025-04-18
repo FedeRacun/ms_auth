@@ -75,7 +75,7 @@ SUPABASE_ANON_KEY=tu-anon-key-aqui
 1. Clonar el repositorio:
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/FedeRacun/ms_auth
 cd ms_auth
 ```
 
